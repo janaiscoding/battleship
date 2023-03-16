@@ -1,4 +1,4 @@
-import Ship from "../battleship/ship";
+import Ship from "../factories/ship.js";
 //created ship
 let newShip = new Ship(2);
 
