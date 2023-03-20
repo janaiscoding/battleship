@@ -1,8 +1,9 @@
-import Gameboard from "./factories/gamboardClass";
+import Gameboard from "./factories/gamboard";
 let testBoard = new Gameboard();
-testBoard.placeShip(5, 0, 5, "H");
-testBoard.placeShip(4, 1, 5, "V");
-testBoard.receiveAttack(0, 0);
-testBoard.receiveAttack(0, 5);
+testBoard.placeShip(2, 1, 1, "H");
+testBoard.receiveAttack(1,1)
+testBoard.receiveAttack(1,2)
+// testBoard.placeShip(1, 0, 0, "H");
 console.log(testBoard);
 console.log("meows");
+testBoard.checkAllSunk()

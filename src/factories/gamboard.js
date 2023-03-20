@@ -1,25 +1,24 @@
 import Ship from "./ship";
 export default class Gameboard {
   constructor() {
-    this.board = [
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-      ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-    ]; //default board
+    this.board = this.createBoard(10); //default board
     this.shipsArray = []; // array will be filled with each ship and it's coordonates
     this.hitCoords = {
       missedHits: [],
       shipHits: [],
     };
+    this.allSunk = false;
   }
-
+  createBoard(size) {
+    let board = [];
+    for (let i = 0; i < size; i++) {
+      board[i] = [];
+      for (let j = 0; j < size; j++) {
+        board[i][j] = "o";
+      }
+    }
+    return board;
+  }
   placeShip(l, x, y, d) {
     if (d === "V") {
       let columnValid = true;
@@ -83,7 +82,6 @@ export default class Gameboard {
     // i check if the actual hit is also a ship -> marked with s-x
     this.shipsArray.forEach((oneShip) => {
       for (let i = 0; i < oneShip.coordPairs.length; i++) {
-        console.log(oneShip.coordPairs[i]);
         if (
           oneShip.coordPairs[i].x == xHit &&
           oneShip.coordPairs[i].y == yHit
@@ -91,7 +89,8 @@ export default class Gameboard {
           shipHit = true;
           // yes that's a hot ass hit baby!
           oneShip.ship.hit();
-          //  checkSunk()
+          oneShip.ship.isSunk();
+          this.checkAllSunk();
         }
       }
     });
@@ -105,8 +104,22 @@ export default class Gameboard {
       this.hitCoords.missedHits.push({ xHit, yHit });
     }
   }
+  checkAllSunk() {
+    let allSunk = true;
+    for (let i = 0; i < this.shipsArray.length; i++) {
+      if (this.shipsArray[i].ship.sunk === false) {
+        allSunk = false;
+        break;
+      }
+    }
+    if (allSunk) {
+      this.allSunk = true;
+    }
+  }
 }
 
-//Gameboards should keep track of missed attacks so they can display them properly. peepoChecked. - marked with x
+//Gameboards should keep track of missed attacks so they can display them properly.
+// Marking missed hit with x and ship hit with s-x
 
 //Gameboards should be able to report whether or not all of their ships have been sunk.
+//Everytime i hit a ship, i will check if it's sunk, and then if all of them are sunk
