@@ -75,7 +75,7 @@ it("Should receive hits in non-ship coordonates", () => {
 it("Should receive hits in ship coordonates", () => {
     testBoard.receiveAttack(0, 5);
     expect(testBoard.board).toEqual([
-      ["x", "o", "o", "o", "o", "x", "H", "H", "H", "H"],
+      ["x", "o", "o", "o", "o", "s-x", "H", "H", "H", "H"],
       ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
       ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
       ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
