@@ -1,4 +1,4 @@
-import { createBoard, placeShip } from "../factories/gameboard";
+import { createBoard, placeShip } from "./gameboard";
 
 it("Should create a new gameboard array", () => {
   let testBoard = createBoard(10);
@@ -91,3 +91,5 @@ it("Should not place on already existing ship", () => {
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
   ]);
 });
+
+

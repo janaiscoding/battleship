@@ -1,4 +1,7 @@
 // Gameboard Factory
+
+
+// OLD CODE
 const createBoard = (size) => {
   let board = [];
   for (let i = 0; i < size; i++) {
@@ -12,47 +15,40 @@ const createBoard = (size) => {
 
 //2. Gameboards should be able to place ships at specific coordinates by calling the ship factory function.
 //saved old
-const placeShip2 = (b, l, x, y, d) => {
-  // b = board, l = ship length, x = vertical coord, y = horizontal coord, d = direction
-  while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
-    //does not go overboard
-    if (d === "V") {
-      // v is vertical, modifies x
-      b[x][y] = "V";
-      x++;
-    } else if (d === "H") {
-      //h is horizontal, modifies y
-      b[x][y] = "H";
-      y++;
-    }
-    l--;
-  }
-  return b;
-};
-
-// refactor
 const placeShip = (b, l, x, y, d) => {
   if (d === "V") {
+    let columnValid = true;
     for (let i = x; i < x + l; i++) {
-      if (b[i][y] === "H" || b[i][y] === "V") console.log("brick");
+      if (b[i][y] !== "o") {
+        columnValid = false;
+        break;
+      }
     }
-
-    while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
-      b[x][y] = "V";
-      x++;
+    if (columnValid) {
+      while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
+        b[x][y] = "V";
+        x++;
+        l--;
+      }
+      return b;
     }
-    l--;
   } else if (d === "H") {
+    let rowValid = true;
     for (let j = y; j < y + l; j++) {
-      if (b[x][j] === "H" || b[x][j] === "V") console.log("brick");
+      if (b[x][j] !== "o") {
+        rowValid = false;
+        break;
+      }
     }
-    while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
-      b[x][y] = "H";
-      y++;
+    if (rowValid) {
+      while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
+        b[x][y] = "H";
+        y++;
+        l--;
+      }
+      return b;
     }
-    l--;
   }
-  return b;
 };
 //Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot.
 const receiveAttack = (b, x, y, h) => {};
