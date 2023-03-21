@@ -1,13 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleships</title>
     <script src="main.js" defer></script>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a
+        href="https://github.com/janaiscoding/battleship/tree/main"
+        class="logo"
+        >J's B.S.</a
+      >
+      <div class="right-wrapper">
+        <div class="social">
+          <a
+            href="https://github.com/janaiscoding"
+            class="social-link"
+            target="_blank"
+            >Contact</a
+          >
+        </div>
+        <div class="theme-toggle">
+          <i class="fa-regular fa-lightbulb"></i>
+          <i class="fa-solid fa-moon"></i>
+        </div>
+      </div>
+    </nav>
+    <main class="content">
+      <div class="new-game-wrapper">
+        <button class="new-game">New Game</button>
+      </div>
+      <div class="info-panel">
+        <button class="info">How To Play</button>
+      </div>
+      <div class="player-board">
+        <div class="numbers-column"></div>
+        <div class="letters-row"></div>
+        <div class="js-player-board">
+          <div class="player-array">
+            <!-- js inserted content player array -->
+          </div>
+          <div class="player-panel">
+            <div class="player-control">
+              <div class="player-direction">H</div>
+              <div class="player-name">playerName</div>
+            </div>
+            <div class="player-ships">
+              <div class="player-carrier">l=5</div>
+              <div class="player-battleship">l=4</div>
+              <div class="player-destroyer">l=3</div>
+              <div class="player-submarine">l=2</div>
+              <div class="player-patrol-boat">l=1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="computer-board">
+        <div class="computer-array">
+          <!-- js inserted content computer array -->
+        </div>
+        <div class="computer-control">
+          <div class="computer-direction">V</div>
+          <div class="computer-name">computer</div>
+        </div>
+        <div class="computer-ships">
+          <div class="computer-carrier">l=5</div>
+          <div class="computer-battleship">l=4</div>
+          <div class="computer-destroyer">l=3</div>
+          <div class="computer-submarine">l=2</div>
+          <div class="computer-patrol-boat">l=1</div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <a
+        href="https://github.com/janaiscoding"
+        class="footer-link"
+        target="_blank"
+        >©JanaIsCoding</a
+      >
+    </footer>
+  </body>
 </html>
