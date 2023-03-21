@@ -6,14 +6,17 @@ import Gameboard from "./gamboard";
 export default class Player {
   constructor(name) {
     this.name = name;
-    this.board = new Gameboard();
+    this.playerBoard = new Gameboard();
   }
-  getRandomShot() {
-    xRan = this.getRandomMove();
-    yRan = this.getRandomMove();
-    return { xRan, yRan };
+  getRandomShotX() {
+    let xRan = this.getRandomMove();
+    return xRan;
+  }
+  getRandomShotY() {
+    let yRan = this.getRandomMove();
+    return yRan;
   }
   getRandomMove() {
-    return Math.floor(Math.random() * 100);
+    return Math.floor(Math.random() * 10);
   }
 }
