@@ -19,8 +19,11 @@ export default class Player {
   getRandomNum() {
     return Math.floor(Math.random() * 10);
   }
-  placePlayerShip(l, x, y, d) {
-    this.playerBoard.placeShip(l, x, y, d);
+  getRandomDirection() {
+    return Math.random() < 0.5 ? "V" : "H";
+  }
+  placePlayerShip(newL, newX, newY, newD) {
+    this.playerBoard.placeShip(newL, newX, newY, newD);
   }
   shootEnemy(myTarget, myX, myY) {
     myTarget.playerBoard.receiveAttack(myX, myY);
