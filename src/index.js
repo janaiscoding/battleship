@@ -1,13 +1,13 @@
 //1. The game loop should set up a new game by creating Players and Gameboards.
 import "./style.css";
+import AI from "./factories/AI";
 import Player from "./factories/player";
-
+import Gameboard from "./factories/gamboard";
 function game() {
-  //game players
   // let player = new Player("player");
-  let computer = new Player("computer");
+  let computer = new AI();
   // place ships
-  placeShipsGame(computer);
+  placeShipsInGame(computer);
   // init boards
   renderBoard(computer);
   //new game
@@ -18,23 +18,9 @@ function game() {
     resetBoards(computer);
   });
 }
-const placeShipsGame = (target) => {
-  if (target.name === "computer") {
-    let shipsArray = target.playerBoard.shipsArray;
-    shipsArray.forEach((eachShip) => {
-      console.log(eachShip);
-      let coordArrayLength = eachShip.coordPairs.length;
-      if (coordArrayLength === 0) {
-        let randomDirection = target.getRandomDirection()
-        let ranX = target.getRandomX();
-        let ranY = target.getRandomY();
-        let pushLength = eachShip.ship.length;
-        console.log(
-          `ship length: ${pushLength}, random X: ${ranX}, random Y: ${ranY}, random direction: ${randomDirection}`
-        );
-        target.placePlayerShip(pushLength, ranX, ranY, randomDirection);
-      }
-    });
+const placeShipsInGame = (targetPlayerBoard) => {
+  if (targetPlayerBoard.name === "computer") {
+    targetPlayerBoard.placeRandomShips();
   }
 };
 const renderBoard = (target) => {
@@ -63,4 +49,15 @@ const resetBoards = (target) => {
 // You need methods to render the gameboards and to take user input for attacking.
 // For attacks, let the user click on a coordinate in the enemy Gameboard
 
-game();
+// let computerPlayer = new AI();
+// computerPlayer.placePlayerShip(5, 0, 5, "H");
+// computerPlayer.placePlayerShip(4, 1, 5, "V");
+// console.log(computerPlayer.playerBoard.board)
+//board test
+let newTestBoard = new Gameboard();
+console.log(newTestBoard);
+newTestBoard.placeShip(2, 1, 1, "H");
+newTestBoard.placeShip(5, 2, 4, "V");
+
+console.log(newTestBoard.shipsArray);
+

@@ -41,8 +41,6 @@ export default class Gameboard {
     return board;
   }
   placeShip(l, x, y, d) {
-    console.log(`l+x:`, l+x)
-    console.log(`l+y:`, l+y)
     if (d === "V") {
       let columnValid = true;
       for (let i = x; i < x + l; i++) {
@@ -101,7 +99,7 @@ export default class Gameboard {
     } else if (d === "H") {
       let rowValid = true;
       for (let j = y; j < y + l; j++) {
-        if (this.board[x][j] !== "o" || y + l < 10) {
+        if (this.board[x][j] !== "o" || y + l > 10) {
           rowValid = false;
           break;
         }
