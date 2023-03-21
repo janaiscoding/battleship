@@ -3,8 +3,9 @@ import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
 import Gameboard from "./factories/gamboard";
+// player turn si pentru ai turn, acum o sa ma bata un pic sa vad cum le conectez, si cum fac sa se updateze pe masura ce se joaca
 function game() {
-  // let player = new Player("player");
+   let player = new Player("player");
   let computer = new AI();
   // place ships
   placeShipsInGame(computer);
