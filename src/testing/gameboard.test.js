@@ -86,9 +86,10 @@ it("Should store the hits individually based on miss or hit status", () => {
 
 it("Should sink a ship after it has been fully hit", () => {
   testBoard.placeShip(2, 1, 1, "H");
+  // l5 = [0], l4 = [1],l3 = [2],l2 = [3],l1 = [4]
   testBoard.receiveAttack(1, 1);
   testBoard.receiveAttack(1, 2);
-  expect(testBoard.shipsArray[2].ship.sunk).toBeTruthy();
+  expect(testBoard.shipsArray[3].ship.sunk).toBeTruthy();
 });
 
 it("Should be able to report by itself when all the ships have been sunk", () => {

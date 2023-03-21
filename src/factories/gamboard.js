@@ -191,9 +191,12 @@ export default class Gameboard {
   checkAllSunk() {
     let allSunk = true;
     for (let i = 0; i < this.shipsArray.length; i++) {
-      if (this.shipsArray[i].ship.sunk === false) {
-        allSunk = false;
-        break;
+      let onlyExistingShips = this.shipsArray[i].coordPairs.length;
+      if (onlyExistingShips > 0) {
+        if (this.shipsArray[i].ship.sunk === false) {
+          allSunk = false;
+          break;
+        }
       }
     }
     if (allSunk) {
