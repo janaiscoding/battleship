@@ -8,15 +8,21 @@ export default class Player {
     this.name = name;
     this.playerBoard = new Gameboard();
   }
-  getRandomShotX() {
-    let xRan = this.getRandomMove();
+  getRandomX() {
+    let xRan = this.getRandomNum();
     return xRan;
   }
-  getRandomShotY() {
-    let yRan = this.getRandomMove();
+  getRandomY() {
+    let yRan = this.getRandomNum();
     return yRan;
   }
-  getRandomMove() {
+  getRandomNum() {
     return Math.floor(Math.random() * 10);
+  }
+  placePlayerShip(l, x, y, d) {
+    this.playerBoard.placeShip(l, x, y, d);
+  }
+  shootEnemy(myTarget, myX, myY) {
+    myTarget.playerBoard.receiveAttack(myX, myY);
   }
 }
