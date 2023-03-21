@@ -48,16 +48,3 @@ const resetBoards = (target) => {
 // You should display both the player’s boards and render them using information from the Gameboard class.
 // You need methods to render the gameboards and to take user input for attacking.
 // For attacks, let the user click on a coordinate in the enemy Gameboard
-
-// let computerPlayer = new AI();
-// computerPlayer.placePlayerShip(5, 0, 5, "H");
-// computerPlayer.placePlayerShip(4, 1, 5, "V");
-// console.log(computerPlayer.playerBoard.board)
-//board test
-let newTestBoard = new Gameboard();
-console.log(newTestBoard);
-newTestBoard.placeShip(2, 1, 1, "H");
-newTestBoard.placeShip(5, 2, 4, "V");
-
-console.log(newTestBoard.shipsArray);
-

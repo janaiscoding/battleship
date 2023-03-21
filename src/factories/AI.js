@@ -20,9 +20,6 @@ export default class AI {
   getRandomDirection() {
     return Math.random() < 0.5 ? "V" : "H";
   }
-  placePlayerShip(newL, newX, newY, newD) {
-    this.playerBoard.placeShip(newL, newX, newY, newD);
-  }
   placeRandomShips() {
     let targetArray = this.playerBoard.shipsArray;
     targetArray.forEach((curentShip) => {
@@ -31,11 +28,13 @@ export default class AI {
         let ranX = this.getRandomX();
         let ranY = this.getRandomY();
         let pushLength = curentShip.ship.length;
-        this.placePlayerShip(pushLength, ranX, ranY, randomDirection);
+        this.playerBoard.placeShip(pushLength, ranX, ranY, randomDirection);
       }
     });
   }
-  shootEnemy(myTarget, myX, myY) {
-    myTarget.playerBoard.receiveAttack(myX, myY);
+  shootEnemyRandom(myTarget) {
+    let hitX = this.getRandomNum();
+    let hitY = this.getRandomNum();
+    myTarget.playerBoard.receiveAttack(hitX, hitY);
   }
 }

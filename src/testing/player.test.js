@@ -1,5 +1,6 @@
 import Player from "../factories/player";
 import AI from "../factories/AI";
+
 let computerPlayer = new AI();
 let player = new Player("Enemy");
 
@@ -24,9 +25,8 @@ it("Should be able to place a ships on its own board", () => {
   ]);
 });
 
-it("Should be able to throw a random attack on a target enemy board", () => {
-  let myX = computerPlayer.getRandomX();
-  let myY = computerPlayer.getRandomY();
-  computerPlayer.shootEnemy(player,myX,myY)
-  expect(Enemy.playerBoard.board[myX][myY]).toEqual("x");
+it("Should be able to throw precisely attack enemy board", () => {
+  player.shootEnemy(computerPlayer,0,5);
+  expect(computerPlayer.playerBoard.board[0][5]).not.toEqual("o");
+  //may be missed hit or ship hit
 });
