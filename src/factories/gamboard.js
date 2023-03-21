@@ -2,7 +2,28 @@ import Ship from "./ship";
 export default class Gameboard {
   constructor() {
     this.board = this.createBoard(10); //default board
-    this.shipsArray = []; // array will be filled with each ship and it's coordonates
+    this.shipsArray = [
+      {
+        ship: new Ship(5, "Carrier"),
+        coordPairs: [],
+      },
+      {
+        ship: new Ship(4, "Battleship"),
+        coordPairs: [],
+      },
+      {
+        ship: new Ship(3, "Destroyer"),
+        coordPairs: [],
+      },
+      {
+        ship: new Ship(2, "Submarine"),
+        coordPairs: [],
+      },
+      {
+        ship: new Ship(1, "Patrol-boat"),
+        coordPairs: [],
+      },
+    ]; // array will be filled with each ship and it's coordonates
     this.hitCoords = {
       missedHits: [],
       shipHits: [],
@@ -29,20 +50,51 @@ export default class Gameboard {
         }
       }
       if (columnValid) {
-        let coordPairs = [];
-        let pushedShip = new Ship(l);
-        this.shipsArray.push({
-          ship: pushedShip,
-          coordPairs: coordPairs,
-        });
-        while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
-          this.board[x][y] = "V";
-          coordPairs.push({ x, y });
-          x++;
-          l--;
+        if (l === 5) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[0].coordPairs.push({ x, y });
+            this.board[x][y] = "V";
+            x++;
+            l--;
+          }
+          return this.board;
         }
-
-        return this.board;
+        if (l === 4) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[1].coordPairs.push({ x, y });
+            this.board[x][y] = "V";
+            x++;
+            l--;
+          }
+          return this.board;
+        }
+        if (l === 3) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[2].coordPairs.push({ x, y });
+            this.board[x][y] = "V";
+            x++;
+            l--;
+          }
+          return this.board;
+        }
+        if (l === 2) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[3].coordPairs.push({ x, y });
+            this.board[x][y] = "V";
+            x++;
+            l--;
+          }
+          return this.board;
+        }
+        if (l === 1) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[4].coordPairs.push({ x, y });
+            this.board[x][y] = "V";
+            x++;
+            l--;
+          }
+          return this.board;
+        }
       }
     } else if (d === "H") {
       let rowValid = true;
@@ -53,19 +105,51 @@ export default class Gameboard {
         }
       }
       if (rowValid) {
-        let coordPairs = [];
-        let pushedShip = new Ship(l);
-        this.shipsArray.push({
-          ship: pushedShip,
-          coordPairs: coordPairs,
-        });
-        while (l !== 0 && l < 6 && x + l < 11 && y + l < 11) {
-          this.board[x][y] = "H";
-          coordPairs.push({ x, y });
-          y++;
-          l--;
+        if (l === 5) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[0].coordPairs.push({ x, y });
+            this.board[x][y] = "H";
+            y++;
+            l--;
+          }
+          return this.board;
         }
-        return this.board;
+        if (l === 4) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[1].coordPairs.push({ x, y });
+            this.board[x][y] = "H";
+            y++;
+            l--;
+          }
+          return this.board;
+        }
+        if (l === 3) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[2].coordPairs.push({ x, y });
+            this.board[x][y] = "H";
+            y++;
+            l--;
+          }
+          return this.board;
+        }
+        if (l === 2) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[3].coordPairs.push({ x, y });
+            this.board[x][y] = "H";
+            y++;
+            l--;
+          }
+          return this.board;
+        }
+        if (l === 1) {
+          while (l !== 0 && x + l < 11 && y + l < 11) {
+            this.shipsArray[4].coordPairs.push({ x, y });
+            this.board[x][y] = "H";
+            y++;
+            l--;
+          }
+          return this.board;
+        }
       }
     }
   }

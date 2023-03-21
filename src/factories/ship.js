@@ -1,14 +1,14 @@
 export default class Ship {
-  constructor(length, hits = 0) {
+  constructor(length, name, hits = 0) {
     this.length = length;
+    this.name = name;
     this.hits = hits;
     this.sunk = false;
   }
   hit() {
     if (this.hits === this.length) {
       return;
-    }
-    else return this.hits++;
+    } else return this.hits++;
   }
   isSunk() {
     if (this.length === this.hits) {

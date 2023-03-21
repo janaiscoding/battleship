@@ -8,4 +8,12 @@ export default class Player {
     this.name = name;
     this.board = new Gameboard();
   }
+  getRandomShot() {
+    xRan = this.getRandomMove();
+    yRan = this.getRandomMove();
+    return { xRan, yRan };
+  }
+  getRandomMove() {
+    return Math.floor(Math.random() * 100);
+  }
 }
