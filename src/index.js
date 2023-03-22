@@ -10,45 +10,78 @@ function game() {
   let computer = new AI();
   refreshGame(player, computer); //We clear the boards everytime
   renderAllBoards(player, computer); // Generating the new boards
+  console.log(computer.playerBoard);
 }
-const placeShipsInGame = (shipType, player, x, y) => {
+const placeDummyShip = (player, x, y) => {
   const carrierSelector = document.querySelector(".player-carrier");
   const battleShipSelector = document.querySelector(".player-battleship");
   const destroyerSelector = document.querySelector(".player-destroyer");
   const submarineSelector = document.querySelector(".player-submarine");
   const patrolBoatSelector = document.querySelector(".player-patrol-boat");
   // on clicks we setL for ships
-  // x = getXFromBoard()
-  // y = getYFromBoard()
-  player.placePlayerShip(newL, getX, getY, newD);
+  x = getXIndex();
+  y = getYIndex();
+  console.log(x, y);
 };
+const carrierSelector = document.querySelector(".player-carrier");
+carrierSelector.addEventListener("click", () => {
+  //when i click a selector, first i get the length of the ship
+  let l = 5;
+  //then i am prompted to set the indexes
+  let x = setYourX();
+  let y = setYourY();
+});
 
 // singular board render
-const renderBoard = (target) => {
-  let targetArray = target.playerBoard.board; //select the correct board
+const renderBoard = (target, getXIndex, getYIndex) => {
+  let targetArray = target.playerBoard.board;
   let targetString = target.name;
   const targetAppend = document.querySelector(`.${targetString}-array`);
-  targetArray.forEach((row) => {
+  targetArray.forEach((row, rowIndex) => {
     const createdRow = document.createElement("div");
-    row.forEach((cell) => {
+    row.forEach((cell, columnIndex) => {
       const createdCell = document.createElement("div");
       createdCell.innerText = cell;
+      createdCell.addEventListener("click", () => {
+        console.log(target)
+        let checkStatus = checkUserShips(target)
+        console.log(checkStatus)
+        if (checkStatus) {
+          console.log(checkUserShips)
+          // start turns and attacking functions
+          // } else {
+          // place player ships
+        }
+        console.log(`Clicked on cell [${rowIndex}][${columnIndex}]`); // x = row, y = column
+      });
       createdRow.appendChild(createdCell);
     });
     targetAppend.appendChild(createdRow);
   });
 };
+const checkUserShips = (target) => {
+  let targetCheck = target.playerBoard.shipsArray;
+  //returns true if all ships are placed
+  let response = targetCheck.every((ship) => ship.coordPairs.length > 0);
+  return response;
+};
 
+const getXIndex = (rowIndex) => {
+  return rowIndex;
+};
+const getYIndex = (columnIndex) => {
+  return columnIndex;
+};
 // calling the board render twice on each gamestart
 const renderAllBoards = (target1, target2) => {
-  renderBoard(target1);
-  renderBoard(target2);
+  renderBoard(target1, getXIndex, getYIndex);
+  renderBoard(target2, getXIndex, getYIndex);
 };
 
 const resetBoard = (target) => {
   let targetString = target.name;
   const targetClear = document.querySelector(`.${targetString}-array`);
-  targetClear.innerHTML = ""; //it will clear the dom 
+  targetClear.innerHTML = ""; //it will clear the dom
 };
 const refreshGame = (target1, target2) => {
   resetBoard(target1);
