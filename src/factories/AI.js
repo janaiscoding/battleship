@@ -50,7 +50,6 @@ export default class AI {
     }
     if (!shotExists) {
       myTarget.playerBoard.receiveAttack(hitX, hitY);
-      console.log(`shooting at: `, pairOfShot)
       this.AIPastShots.push(pairOfShot);
     }
   }

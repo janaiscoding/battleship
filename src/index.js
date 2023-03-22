@@ -2,9 +2,8 @@
 import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
-
-let selectedShipLength = null;
 let turn = "pT";
+let selectedShipLength = null;
 
 function game() {
   let player = new AI("player");
@@ -12,19 +11,26 @@ function game() {
   refreshGame(player, computer);
   renderAllBoards(player, computer);
   let isGameWon = checkIfWinner(player, computer);
+
   while (!isGameWon) {
     if (turn === "pT") {
       player.shootEnemyRandom(computer);
-      swapTurn();
+      swapTurn("pT");
     } else if (turn === "cT") {
       computer.shootEnemyRandom(player);
-      swapTurn();
+      swapTurn("cT");
     }
     isGameWon = checkIfWinner(player, computer);
   }
-  let hasDuplicate = player.AIPastShots.some((val, i) => player.AIPastShots.indexOf(val) !== i);
-  let hasDuplicate2 = computer.AIPastShots.some((val, i) => computer.AIPastShots.indexOf(val) !== i);
-  console.log(hasDuplicate, hasDuplicate2)
+  let hasDuplicate = player.AIPastShots.some(
+    (val, i) => player.AIPastShots.indexOf(val) !== i
+  );
+  let hasDuplicate2 = computer.AIPastShots.some(
+    (val, i) => computer.AIPastShots.indexOf(val) !== i
+  );
+  console.log(hasDuplicate, hasDuplicate2);
+  console.log(player.playerBoard.board);
+  console.log(computer.playerBoard.board);
 }
 
 // BOARDING AROUND HERE
@@ -59,10 +65,10 @@ const checkUserShips = (target) => {
 };
 
 // swap turns
-const swapTurn = (turn) => {
-  if (turn === "pT") {
+const swapTurn = (myCurrent) => {
+  if (myCurrent === "pT") {
     turn = "cT";
-  } else {
+  } else if (myCurrent === "cT") {
     turn = "pT";
   }
   return turn;
