@@ -2,38 +2,19 @@
 import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
-import Gameboard from "./factories/gamboard";
+
+let selectedShipLength = null;
 
 // player turn si pentru ai turn, acum o sa ma bata un pic sa vad cum le conectez, si cum fac sa se updateze pe masura ce se joaca
 function game() {
   let player = new Player("player");
   let computer = new AI();
   refreshGame(player, computer); //We clear the boards everytime
-  renderAllBoards(player, computer); // Generating the new boards
-  console.log(computer.playerBoard);
+  renderAllBoards(player, computer); // Generating both boards
 }
-const placeDummyShip = (player, x, y) => {
-  const carrierSelector = document.querySelector(".player-carrier");
-  const battleShipSelector = document.querySelector(".player-battleship");
-  const destroyerSelector = document.querySelector(".player-destroyer");
-  const submarineSelector = document.querySelector(".player-submarine");
-  const patrolBoatSelector = document.querySelector(".player-patrol-boat");
-  // on clicks we setL for ships
-  x = getXIndex();
-  y = getYIndex();
-  console.log(x, y);
-};
-const carrierSelector = document.querySelector(".player-carrier");
-carrierSelector.addEventListener("click", () => {
-  //when i click a selector, first i get the length of the ship
-  let l = 5;
-  //then i am prompted to set the indexes
-  let x = setYourX();
-  let y = setYourY();
-});
 
-// singular board render
-const renderBoard = (target, getXIndex, getYIndex) => {
+// BOARDING AROUND HERE
+const renderBoard = (target, handleCellClicks) => {
   let targetArray = target.playerBoard.board;
   let targetString = target.name;
   const targetAppend = document.querySelector(`.${targetString}-array`);
@@ -43,16 +24,16 @@ const renderBoard = (target, getXIndex, getYIndex) => {
       const createdCell = document.createElement("div");
       createdCell.innerText = cell;
       createdCell.addEventListener("click", () => {
-        console.log(target)
-        let checkStatus = checkUserShips(target)
-        console.log(checkStatus)
+        let checkStatus = checkUserShips(target);
         if (checkStatus) {
-          console.log(checkUserShips)
           // start turns and attacking functions
-          // } else {
-          // place player ships
+        } else {
+          handleCellClicks(target, rowIndex, columnIndex);
+          resetBoard(target)
+          renderBoard(target,handleCellClicks)
+          //place player ships
         }
-        console.log(`Clicked on cell [${rowIndex}][${columnIndex}]`); // x = row, y = column
+        //   console.log(`Clicked on cell [${rowIndex}][${columnIndex}]`); // x = row, y = column
       });
       createdRow.appendChild(createdCell);
     });
@@ -66,16 +47,22 @@ const checkUserShips = (target) => {
   return response;
 };
 
-const getXIndex = (rowIndex) => {
-  return rowIndex;
+const handleCellClicks = (target, rowIndex, columnIndex) => {
+  if (selectedShipLength !== null) {
+    // place the ship on the player class
+    target.placePlayerShip(selectedShipLength, rowIndex, columnIndex, "H");
+    //reset length
+    selectedShipLength = null;
+  } else {
+    // target the enemy board
+  }
+  
 };
-const getYIndex = (columnIndex) => {
-  return columnIndex;
-};
+
 // calling the board render twice on each gamestart
 const renderAllBoards = (target1, target2) => {
-  renderBoard(target1, getXIndex, getYIndex);
-  renderBoard(target2, getXIndex, getYIndex);
+  renderBoard(target1, handleCellClicks);
+  renderBoard(target2, handleCellClicks);
 };
 
 const resetBoard = (target) => {
@@ -88,6 +75,14 @@ const refreshGame = (target1, target2) => {
   resetBoard(target2);
 };
 
+// DOM TOGGLE SHIPS SELECTORS
+const lengthSelectors = document.querySelectorAll(".length-selector");
+lengthSelectors.forEach((selector) => {
+  selector.addEventListener("click", (e) => {
+    selectedShipLength = parseInt(e.target.id);
+  });
+});
+
 game();
 // For now just populate each Gameboard with predetermined coordinates.
 // You can implement a system for allowing players to place their ships later
@@ -97,6 +92,5 @@ game();
 //new game
 let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", (e) => {
-  console.log("works");
   game();
 });
