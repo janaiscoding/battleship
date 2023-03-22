@@ -3,7 +3,9 @@ import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
 let turn = "pT";
-let selectedShipLength = null;
+
+let shipLength = null;
+let shipDirection = "H";
 
 function game() {
   let player = new AI("player");
@@ -11,7 +13,6 @@ function game() {
   refreshGame(player, computer);
   renderAllBoards(player, computer);
   let isGameWon = checkIfWinner(player, computer);
-
   while (!isGameWon) {
     if (turn === "pT") {
       player.shootEnemyRandom(computer);
@@ -20,17 +21,10 @@ function game() {
       computer.shootEnemyRandom(player);
       swapTurn("cT");
     }
+    refreshGame(player, computer);
+    renderAllBoards(player, computer);
     isGameWon = checkIfWinner(player, computer);
   }
-  let hasDuplicate = player.AIPastShots.some(
-    (val, i) => player.AIPastShots.indexOf(val) !== i
-  );
-  let hasDuplicate2 = computer.AIPastShots.some(
-    (val, i) => computer.AIPastShots.indexOf(val) !== i
-  );
-  console.log(hasDuplicate, hasDuplicate2);
-  console.log(player.playerBoard.board);
-  console.log(computer.playerBoard.board);
 }
 
 // BOARDING AROUND HERE
@@ -40,9 +34,11 @@ const renderBoard = (target, handleCellClicks) => {
   const targetAppend = document.querySelector(`.${targetString}-array`);
   targetArray.forEach((row, rowIndex) => {
     const createdRow = document.createElement("div");
+    createdRow.classList.add("row");
     row.forEach((cell, columnIndex) => {
       const createdCell = document.createElement("div");
       createdCell.innerText = cell;
+      createdCell.classList.add("cell");
       createdCell.addEventListener("click", () => {
         let checkStatus = checkUserShips(target);
         if (checkStatus) {
@@ -77,8 +73,8 @@ const swapTurn = (myCurrent) => {
 // condition for ending the game -- if player will hit, it checks the enemy board and vice versa
 const checkIfWinner = (player, computer) => {
   let gameOver = false;
-  let playerHasLost = player.playerBoard.allSunk; // all player ships sunk = boolean
-  let computerHasLost = computer.playerBoard.allSunk; // all player ships sunk = boolean
+  let playerHasLost = player.playerBoard.allSunk;
+  let computerHasLost = computer.playerBoard.allSunk;
   if (playerHasLost && !computerHasLost) {
     gameOver = true;
     console.log("computer has won");
@@ -91,11 +87,11 @@ const checkIfWinner = (player, computer) => {
 
 // handler for placing ships
 const handleCellClicks = (target, rowIndex, columnIndex) => {
-  if (selectedShipLength !== null) {
-    target.placePlayerShip(selectedShipLength, rowIndex, columnIndex, "H");
+  if (shipLength !== null) {
+    target.placePlayerShip(shipLength, rowIndex, columnIndex, shipDirection);
     clearBoard(target);
     renderBoard(target, handleCellClicks);
-    selectedShipLength = null;
+    shipLength = null;
   }
 };
 
@@ -128,6 +124,19 @@ newGame.addEventListener("click", (e) => {
 const lengthSelectors = document.querySelectorAll(".length-selector");
 lengthSelectors.forEach((selector) => {
   selector.addEventListener("click", (e) => {
-    selectedShipLength = parseInt(e.target.id);
+    shipLength = parseInt(e.target.id);
   });
+});
+
+// DOM TOGGLE DIRECTION
+const playerDirection = document.querySelector(".player-direction");
+playerDirection.addEventListener("click", () => {
+  if (playerDirection.innerText === "H") {
+    shipDirection = "V";
+    playerDirection.innerText = "V";
+  } else if (playerDirection.innerText === "V") {
+    shipDirection = "H";
+    playerDirection.innerText = "H";
+  }
+  console.log(shipDirection);
 });

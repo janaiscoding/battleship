@@ -1,6 +1,27 @@
-.player-array,
-.computer-array {
+.gameboard {
   display: grid;
-  grid-template-columns: repeat(10, 10px);
-  grid-template-rows: repeat(10, 10px);
+  grid-template-columns: repeat(10, 60px);
+  grid-template-rows: repeat(10, 60px);
+  width: 600px;
+  height: 600px;
+  border: solid 1px black;
+  display: flex;
+}
+.content {
+  display: flex;
+}
+.cell,
+.row {
+  width: 60px;
+  height: 60px;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player-ships,
+.player-control{ 
+  display: flex;
+  gap: 50px;
 }
