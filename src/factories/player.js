@@ -8,7 +8,21 @@ export default class Player {
   placePlayerShip(newL, newX, newY, newD) {
     this.playerBoard.placeShip(newL, newX, newY, newD);
   }
-  shootEnemy(myTarget, myX, myY) {
-    myTarget.playerBoard.receiveAttack(myX, myY);
+  // support for receiving random attack
+  getRandomX() {
+    let xRan = this.getRandomNum();
+    return xRan;
+  }
+  getRandomY() {
+    let yRan = this.getRandomNum();
+    return yRan;
+  }
+  getRandomNum() {
+    return Math.floor(Math.random() * 10);
+  }
+  receiveShotFromAI() {
+    let hitX = this.getRandomNum();
+    let hitY = this.getRandomNum();
+    this.playerBoard.receiveAttack(hitX, hitY);
   }
 }

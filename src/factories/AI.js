@@ -1,10 +1,10 @@
 import Gameboard from "./gamboard";
 
 export default class AI {
-  constructor() {
-    this.name = "computer";
+  constructor(name) {
+    this.name = name;
     this.playerBoard = new Gameboard();
-    this.AIShips = this.placeRandomShips();
+    this.placeRandomShips();
   }
   getRandomX() {
     let xRan = this.getRandomNum();
@@ -32,9 +32,17 @@ export default class AI {
       }
     });
   }
+  receiveShotFromPlayer(myTarget, myX, myY) {
+    myTarget.playerBoard.receiveAttack(myX, myY);
+  }
   shootEnemyRandom(myTarget) {
     let hitX = this.getRandomNum();
     let hitY = this.getRandomNum();
     myTarget.playerBoard.receiveAttack(hitX, hitY);
+  }
+  receiveShotFromAI() {
+    let hitX = this.getRandomNum();
+    let hitY = this.getRandomNum();
+    this.playerBoard.receiveAttack(hitX, hitY);
   }
 }
