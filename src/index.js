@@ -3,22 +3,27 @@ import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
 let turn = "pT";
-
 let shipLength = null;
 let shipDirection = "H";
+let myX = null;
+let myY = null;
+let player = new Player("player");
+let computer = new AI("computer");
 
 function game() {
-  let player = new AI("player");
-  let computer = new AI("computer");
   refreshGame(player, computer);
   renderAllBoards(player, computer);
   let isGameWon = checkIfWinner(player, computer);
   while (!isGameWon) {
-    if (turn === "pT") {
-      player.shootEnemyRandom(computer);
-      swapTurn("pT");
+    if (turn === "pt") {
+      if (myX !== null && myY !== null) {
+        player.playerShot(computer, myX, myY);
+        myX = null;
+        myY = null;
+        swapTurn("pT");
+      }
     } else if (turn === "cT") {
-      computer.shootEnemyRandom(player);
+      computer.computerShot(player);
       swapTurn("cT");
     }
     refreshGame(player, computer);
@@ -35,16 +40,20 @@ const renderBoard = (target, handleCellClicks) => {
   targetArray.forEach((row, rowIndex) => {
     const createdRow = document.createElement("div");
     createdRow.classList.add("row");
+    createdRow.id = rowIndex;
     row.forEach((cell, columnIndex) => {
       const createdCell = document.createElement("div");
       createdCell.innerText = cell;
       createdCell.classList.add("cell");
+      createdCell.id = columnIndex;
       createdCell.addEventListener("click", () => {
-        let checkStatus = checkUserShips(target);
-        if (checkStatus) {
-          //game can start
-        } else {
-          handleCellClicks(target, rowIndex, columnIndex); // keep placing ships
+        if (checkStatus && target.name === "computer") {
+          myX = rowIndex;
+          myY = columnIndex;
+        } else if (!checkStatus && target.name === "player") {
+          handleCellClicks(target, rowIndex, columnIndex);
+          checkStatus = checkUserShips(target);
+          console.log(checkStatus);
         }
       });
       createdRow.appendChild(createdCell);
@@ -112,8 +121,6 @@ const refreshGame = (target1, target2) => {
   clearBoard(target2);
 };
 
-game();
-
 //new game
 let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", (e) => {
@@ -140,3 +147,6 @@ playerDirection.addEventListener("click", () => {
   }
   console.log(shipDirection);
 });
+
+game();
+let checkStatus = checkUserShips(player);

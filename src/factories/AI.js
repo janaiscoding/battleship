@@ -33,11 +33,7 @@ export default class AI {
       }
     });
   }
-  receiveShotFromPlayer(myTarget, myX, myY) {
-    myTarget.playerBoard.receiveAttack(myX, myY);
-  }
-
-  shootEnemyRandom(myTarget) {
+  computerShot(myTarget) {
     let shotExists = false;
     let hitX = this.getRandomNum();
     let hitY = this.getRandomNum();
@@ -52,11 +48,5 @@ export default class AI {
       myTarget.playerBoard.receiveAttack(hitX, hitY);
       this.AIPastShots.push(pairOfShot);
     }
-  }
-
-  receiveShotFromAI() {
-    let hitX = this.getRandomNum();
-    let hitY = this.getRandomNum();
-    this.playerBoard.receiveAttack(hitX, hitY);
   }
 }
