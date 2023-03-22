@@ -4,6 +4,7 @@ export default class AI {
   constructor(name) {
     this.name = name;
     this.playerBoard = new Gameboard();
+    this.AIPastShots = [];
     this.placeRandomShips();
   }
   getRandomX() {
@@ -35,11 +36,25 @@ export default class AI {
   receiveShotFromPlayer(myTarget, myX, myY) {
     myTarget.playerBoard.receiveAttack(myX, myY);
   }
+
   shootEnemyRandom(myTarget) {
+    let shotExists = false;
     let hitX = this.getRandomNum();
     let hitY = this.getRandomNum();
-    myTarget.playerBoard.receiveAttack(hitX, hitY);
+    let pairOfShot = [hitX, hitY];
+    if (this.AIPastShots.includes(pairOfShot)) {
+      shotExists = true;
+      hitX = this.getRandomNum();
+      hitY = this.getRandomNum();
+      pairOfShot = [hitX, hitY];
+    }
+    if (!shotExists) {
+      myTarget.playerBoard.receiveAttack(hitX, hitY);
+      console.log(`shooting at: `, pairOfShot)
+      this.AIPastShots.push(pairOfShot);
+    }
   }
+
   receiveShotFromAI() {
     let hitX = this.getRandomNum();
     let hitY = this.getRandomNum();

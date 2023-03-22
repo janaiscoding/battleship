@@ -11,6 +11,20 @@ function game() {
   let computer = new AI("computer");
   refreshGame(player, computer);
   renderAllBoards(player, computer);
+  let isGameWon = checkIfWinner(player, computer);
+  while (!isGameWon) {
+    if (turn === "pT") {
+      player.shootEnemyRandom(computer);
+      swapTurn();
+    } else if (turn === "cT") {
+      computer.shootEnemyRandom(player);
+      swapTurn();
+    }
+    isGameWon = checkIfWinner(player, computer);
+  }
+  let hasDuplicate = player.AIPastShots.some((val, i) => player.AIPastShots.indexOf(val) !== i);
+  let hasDuplicate2 = computer.AIPastShots.some((val, i) => computer.AIPastShots.indexOf(val) !== i);
+  console.log(hasDuplicate, hasDuplicate2)
 }
 
 // BOARDING AROUND HERE
@@ -25,7 +39,6 @@ const renderBoard = (target, handleCellClicks) => {
       createdCell.innerText = cell;
       createdCell.addEventListener("click", () => {
         let checkStatus = checkUserShips(target);
-        console.log(checkStatus);
         if (checkStatus) {
           //game can start
         } else {
@@ -45,33 +58,29 @@ const checkUserShips = (target) => {
   return response;
 };
 
-//main game loop
-const gameLogic = () => {
-  let isGameWon = checkIfWinner(target);
-  while (!isGameWon) {
-    // do player move
-    doPlayerMove();
-    // swap turns
-    // do computer move
-    // check if winner
-    checkIfWinner(target);
-    // swap turns
-  }
-};
 // swap turns
-const swapTurn = (ct) => {
-  ct === "pT" ? (ct = "cT") : (ct = "pT");
+const swapTurn = (turn) => {
+  if (turn === "pT") {
+    turn = "cT";
+  } else {
+    turn = "pT";
+  }
+  return turn;
 };
 
 // condition for ending the game -- if player will hit, it checks the enemy board and vice versa
-const checkIfWinner = (target) => {
-  let loserBoard = target.playerBoard.allSunk;
-  if (loserBoard) {
-    if (target.name === "computer") {
-      console.log("player has won");
-    } else console.log("computer has won");
+const checkIfWinner = (player, computer) => {
+  let gameOver = false;
+  let playerHasLost = player.playerBoard.allSunk; // all player ships sunk = boolean
+  let computerHasLost = computer.playerBoard.allSunk; // all player ships sunk = boolean
+  if (playerHasLost && !computerHasLost) {
+    gameOver = true;
+    console.log("computer has won");
+  } else if (computerHasLost && !playerHasLost) {
+    gameOver = true;
+    console.log("player has won");
   }
-  return target.playerBoard.allSunk;
+  return gameOver;
 };
 
 // handler for placing ships
@@ -108,6 +117,7 @@ let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", (e) => {
   game();
 });
+
 // DOM TOGGLE SHIPS SELECTORS
 const lengthSelectors = document.querySelectorAll(".length-selector");
 lengthSelectors.forEach((selector) => {
