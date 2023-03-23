@@ -1,17 +1,99 @@
+@font-face {
+  font-family: "Inder";
+  src: url(/src/assets/Inder/Inder-Regular.ttf);
+  font-style: normal;
+}
+
+:root {
+  font-family: "Inder";
+  --primary-blue: #181823;
+  --primary-purple: #4a4182;
+  --primary-pink: #f2dede;
+  --primary-red: #964848;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--primary-purple);
+}
+
+/*HEADER*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 100px;
+  background-color: var(--primary-blue);
+  height: 10vh;
+  -webkit-box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
+  box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
+}
+.logo {
+  color: white;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.social-link {
+  color: white;
+  font-size: 1.3rem;
+}
+/* MAIN CONTENT */
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 100px;
+}
+.top-side-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.bottom-side-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.player-board,
+.numbers-column,
+.letters-row,
+.computer-board{
+  display: flex;
+}
+.numbers-column {
+  flex-direction: column;
+  margin-top: 30px;
+}
+.letter {
+  height: 30px;
+  width: 60px;
+  font-size: 24px;
+  text-align: center;
+}
+.number {
+  height: 60px;
+  width: 30px;
+  font-size: 24px;
+  text-align: center;
+}
 .gameboard {
   display: grid;
   grid-template-columns: repeat(10, 60px);
   grid-template-rows: repeat(10, 60px);
+  background-color: var(--primary-pink);
   width: 600px;
   height: 600px;
   border: solid 1px black;
 }
-.content {
-  display: flex;
-}
+
 .cell,
 .row {
-  border: 1px solid rgba(0, 0, 0, 0.048);
+  border: 1px solid rgba(207, 0, 0, 0.048);
   width: 58px;
   height: 58px;
 }
@@ -38,7 +120,7 @@
 .correct-hit {
   background-color: bisque;
 }
-.ship-style{
+.ship-style {
   background-color: aqua;
 }
 .invalid-placement:hover {
@@ -46,4 +128,29 @@
 }
 .can-start {
   display: none;
+}
+
+/*FOOTER*/
+footer {
+  background-color: var(--primary-blue);
+  -webkit-box-shadow: 0px -5px 10px -4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -5px 10px -4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+}
+.footer-link {
+  color: white;
+}
+/* GLOBAL SETTINGS */
+a,
+a:visited,
+a:focus {
+  text-decoration: none;
+}
+
+input:focus,
+input:active {
+  border-color: transparent;
 }
