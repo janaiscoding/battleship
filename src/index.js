@@ -1,4 +1,3 @@
-//1. The game loop should set up a new game by creating Players and Gameboards.
 import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
@@ -72,25 +71,25 @@ const renderBoard = (boardName) => {
   });
 };
 
-// Condition for knowing when player can start shooting
+// CHECKING IF ALL SHIPS WERE PLACED SO WE CAN START ATTACKING
 const checkPlayerShips = () => {
   let targetCheck = player.playerBoard.shipsArray;
   let response = targetCheck.every((ship) => ship.coordPairs.length > 0);
   return response;
 };
 
-//handler for attacking enemy
+// ATTACKING AN ENEMY, BEING ATTACKED BY COMPUTER, AND CHECKING FOR WIN CONDITION
 const attackEvent = (e) => {
   let x = parseInt(e.target.getAttribute("data-x"));
   let y = parseInt(e.target.getAttribute("data-y"));
   let canAttack = checkPlayerShips();
   if (canAttack) {
-    //player turn
+    // PLAYER TURN
     player.playerShot(computer, x, y);
     if (computer.playerBoard.allSunk) {
       endGame(player);
     }
-    // ai turn
+    // AI TURN
     computer.computerShot(player);
     updateBoard(player);
     if (player.playerBoard.allSunk) {
@@ -99,13 +98,14 @@ const attackEvent = (e) => {
   }
 };
 
-//end game handler
+// END GAME (MAYBE ADD "PLAY AGAIN?")
 const endGame = (winnerName) => {
   computerBoard.classList.add("unclickable");
   winnerLabel.style.display = "block";
   winnerLabel.innerText = `Our winner is ${winnerName.name}`;
 };
-// handler for placing ships
+
+// PLACING PLAYER SHIP ON CLICK
 const placeShipEvent = (e) => {
   let x = parseInt(e.target.getAttribute("data-x"));
   let y = parseInt(e.target.getAttribute("data-y"));
@@ -130,7 +130,7 @@ const updateBoard = (board) => {
   renderBoard(board);
 };
 
-//new game button
+// NEW GAME BUTTON
 let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", () => {
   playerBoard.classList.remove("unclickable");
@@ -158,23 +158,3 @@ directionSelector.addEventListener("click", () => {
 });
 
 game();
-import Gameboard from "./factories/gamboard";
-let testBoard = new Gameboard();
-testBoard.placeShip(5, 0, 5, "V");
-testBoard.placeShip(4, 1, 5, "H");
-testBoard.placeShip(2, 1, 1, "H");
-
-// l5 = [4], l4 = [3],l3 = [2],l2 = [1],l1 = [0]
-testBoard.receiveAttack(1, 1);
-testBoard.receiveAttack(2, 1);
-
-testBoard.receiveAttack(1, 5);
-testBoard.receiveAttack(2, 5);
-testBoard.receiveAttack(3, 5);
-testBoard.receiveAttack(4, 5);
-testBoard.receiveAttack(0, 5);
-testBoard.receiveAttack(0, 6);
-testBoard.receiveAttack(0, 7);
-testBoard.receiveAttack(0, 8);
-testBoard.receiveAttack(0, 9);
-console.log(testBoard.board)
