@@ -35,7 +35,6 @@ export default class AI {
       }
     });
   }
-
   computerShot(myTarget) {
     let shotExists = false;
     let hitX = this.getRandomNum();

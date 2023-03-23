@@ -7,14 +7,14 @@ it("Should create a new gameboard class which generates a gameboard array", () =
 });
 
 it("Should place horizontal and vertical ships correctly", () => {
-  testBoard.placeShip(5, 0, 5, "H");
-  testBoard.placeShip(4, 1, 5, "V");
+  testBoard.placeShip(5, 0, 5, "V");
+  testBoard.placeShip(4, 1, 5, "H");
   expect(testBoard.board).toEqual([
-    ["o", "o", "o", "o", "o", "H", "H", "H", "H", "H"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "V", "V", "V", "V", "V"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
@@ -26,11 +26,11 @@ it("Should place horizontal and vertical ships correctly", () => {
 it("Should not allow placing ships outside the board", () => {
   testBoard.placeShip(5, 8, 6, "H");
   expect(testBoard.board).toEqual([
-    ["o", "o", "o", "o", "o", "H", "H", "H", "H", "H"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "V", "V", "V", "V", "V"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
@@ -42,11 +42,11 @@ it("Should not allow placing ships outside the board", () => {
 it("Should not place on already existing ship", () => {
   testBoard.placeShip(3, 0, 6, "H");
   expect(testBoard.board).toEqual([
-    ["o", "o", "o", "o", "o", "H", "H", "H", "H", "H"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "V", "V", "V", "V", "V"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
@@ -59,11 +59,11 @@ it("Should receive hits in both ship and non-ship coordonates", () => {
   testBoard.receiveAttack(0, 0);
   testBoard.receiveAttack(0, 5);
   expect(testBoard.board).toEqual([
-    ["x", "o", "o", "o", "o", "s-x", "H", "H", "H", "H"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
-    ["o", "o", "o", "o", "o", "V", "o", "o", "o", "o"],
+    ["x", "o", "o", "o", "o", "s-x", "V", "V", "V", "V"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
+    ["o", "o", "o", "o", "o", "H", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
     ["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
@@ -73,7 +73,7 @@ it("Should receive hits in both ship and non-ship coordonates", () => {
 });
 
 it("Should store the correct hit in the ship class", () => {
-  let testShip = testBoard.shipsArray[0].ship;
+  let testShip = testBoard.shipsArray[4].ship;
   expect(testShip.hits).toEqual(1);
 });
 
@@ -86,10 +86,10 @@ it("Should store the hits individually based on miss or hit status", () => {
 
 it("Should sink a ship after it has been fully hit", () => {
   testBoard.placeShip(2, 1, 1, "H");
-  // l5 = [0], l4 = [1],l3 = [2],l2 = [3],l1 = [0]
+  // l5 = [4], l4 = [3],l3 = [2],l2 = [1],l1 = [0]
   testBoard.receiveAttack(1, 1);
-  testBoard.receiveAttack(1, 2);
-  expect(testBoard.shipsArray[3].ship.sunk).toBeTruthy();
+  testBoard.receiveAttack(2, 1);
+  expect(testBoard.shipsArray[1].ship.sunk).toBeTruthy();
 });
 
 it("Should be able to report by itself when all the ships have been sunk", () => {

@@ -2,18 +2,29 @@
 import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
-let turn = "pT";
+const computerBoard = document.querySelector(".computer-array");
+const playerBoard = document.querySelector(".player-array");
+const canStartGame = document.querySelector(".can-start");
+const winnerLabel = document.querySelector(".winner");
+
 let player = new Player("player");
 let computer = new AI("computer");
+let shipLength = null;
+let shipDirection = "V";
 
-let shipLength = null; // let user put their ship lengths
-let shipDirection = "V"; // lets user pick their ship direction
+const game = () => {
+  player = new Player("player");
+  computer = new AI("computer");
+  gameStart();
+};
 
-function game() {
-  renderAllBoards();
-}
+const gameStart = () => {
+  clearBoard(player);
+  renderBoard(player);
+  clearBoard(computer);
+  renderBoard(computer);
+};
 
-// BOARDING AROUND HERE
 const renderBoard = (boardName) => {
   let targetArray = boardName.playerBoard.board;
   const targetAppend = document.querySelector(`.${boardName.name}-array`);
@@ -22,19 +33,36 @@ const renderBoard = (boardName) => {
     myRow.classList.add("row");
     row.forEach((cell, columnIndex) => {
       const myCell = document.createElement("div");
-      myCell.innerText = cell;
       myCell.classList.add("cell");
       myCell.setAttribute("data-x", rowIndex);
       myCell.setAttribute("data-y", columnIndex);
+      let thisCell = targetArray[rowIndex][columnIndex];
+      if (thisCell === "x") {
+        myCell.classList.add("unclickable");
+        myCell.classList.add("missed-hit");
+      } else if (thisCell === "s-x") {
+        myCell.classList.add("unclickable");
+        myCell.classList.add("correct-hit");
+      }
       myRow.appendChild(myCell);
       if (boardName.name === "computer") {
         myCell.addEventListener("click", (e) => {
-          attackEvent(e);
-          updateBoard(boardName);
+          if (thisCell !== "x" || thisCell !== "s-x") {
+            attackEvent(e);
+            updateBoard(boardName);
+          }
         });
       }
       if (boardName.name === "player") {
+        if (thisCell === "H") {
+          myCell.classList.add("ship-style");
+          myCell.classList.add("invalid-placement");
+        } else if (thisCell === "V") {
+          myCell.classList.add("ship-style");
+          myCell.classList.add("invalid-placement");
+        }
         myCell.addEventListener("click", (e) => {
+          e.preventDefault();
           placeShipEvent(e);
           updateBoard(boardName);
         });
@@ -44,72 +72,59 @@ const renderBoard = (boardName) => {
   });
 };
 
-// Condition for knowing when i can start shooting
-const checkUserShips = (target) => {
-  let targetCheck = target.playerBoard.shipsArray;
+// Condition for knowing when player can start shooting
+const checkPlayerShips = () => {
+  let targetCheck = player.playerBoard.shipsArray;
   let response = targetCheck.every((ship) => ship.coordPairs.length > 0);
   return response;
-};
-
-// swap turns
-const swapTurn = (myCurrent) => {
-  if (myCurrent === "pT") {
-    turn = "cT";
-  } else if (myCurrent === "cT") {
-    turn = "pT";
-  }
-  return turn;
-};
-
-// condition for ending the game -- if player will hit, it checks the enemy board and vice versa
-const checkIfWinner = (player, computer) => {
-  let gameOver = false;
-  let playerHasLost = player.playerBoard.allSunk;
-  let computerHasLost = computer.playerBoard.allSunk;
-  if (playerHasLost && !computerHasLost) {
-    gameOver = true;
-    console.log("computer has won");
-  } else if (computerHasLost && !playerHasLost) {
-    gameOver = true;
-    console.log("player has won");
-  }
-  return gameOver;
 };
 
 //handler for attacking enemy
 const attackEvent = (e) => {
   let x = parseInt(e.target.getAttribute("data-x"));
   let y = parseInt(e.target.getAttribute("data-y"));
-  player.playerShot(computer, x, y);
+  let canAttack = checkPlayerShips();
+  if (canAttack) {
+    //player turn
+    player.playerShot(computer, x, y);
+    if (computer.playerBoard.allSunk) {
+      endGame(player);
+    }
+    // ai turn
+    computer.computerShot(player);
+    updateBoard(player);
+    if (player.playerBoard.allSunk) {
+      endGame(computer);
+    }
+  }
 };
 
+//end game handler
+const endGame = (winnerName) => {
+  computerBoard.classList.add("unclickable");
+  winnerLabel.style.display = "block";
+  winnerLabel.innerText = `Our winner is ${winnerName.name}`;
+};
 // handler for placing ships
 const placeShipEvent = (e) => {
   let x = parseInt(e.target.getAttribute("data-x"));
   let y = parseInt(e.target.getAttribute("data-y"));
   player.placePlayerShip(shipLength, x, y, shipDirection);
-  let allShipsPlaced = checkUserShips(player);
+  let allShipsPlaced = checkPlayerShips();
   if (allShipsPlaced) {
-    const playerBoard = document.querySelector(`.player-array`);
-    playerBoard.classList.add("full");
+    canStartGame.style.display = "block";
+    computerBoard.classList.remove("unclickable");
+    playerBoard.classList.add("unclickable");
   }
   shipLength = null;
-};
-
-// calling the board render twice on each gamestart
-const renderAllBoards = () => {
-  clearBoard(player)
-  renderBoard(player);
-  clearBoard(computer)
-  renderBoard(computer);
 };
 
 const clearBoard = (board) => {
   const targetDiv = board.name;
   const targetClear = document.querySelector(`.${targetDiv}-array`);
-  targetClear.innerHTML = ""; //it will clear the dom
+  targetClear.innerHTML = "";
 };
-//
+
 const updateBoard = (board) => {
   clearBoard(board);
   renderBoard(board);
@@ -118,8 +133,7 @@ const updateBoard = (board) => {
 //new game button
 let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", () => {
-  player = new Player("player");
-  computer = new AI("computer");
+  playerBoard.classList.remove("unclickable");
   game();
 });
 
@@ -141,6 +155,26 @@ directionSelector.addEventListener("click", () => {
     shipDirection = "H";
     directionSelector.innerText = "H";
   }
-  console.log(shipDirection);
 });
+
 game();
+import Gameboard from "./factories/gamboard";
+let testBoard = new Gameboard();
+testBoard.placeShip(5, 0, 5, "V");
+testBoard.placeShip(4, 1, 5, "H");
+testBoard.placeShip(2, 1, 1, "H");
+
+// l5 = [4], l4 = [3],l3 = [2],l2 = [1],l1 = [0]
+testBoard.receiveAttack(1, 1);
+testBoard.receiveAttack(2, 1);
+
+testBoard.receiveAttack(1, 5);
+testBoard.receiveAttack(2, 5);
+testBoard.receiveAttack(3, 5);
+testBoard.receiveAttack(4, 5);
+testBoard.receiveAttack(0, 5);
+testBoard.receiveAttack(0, 6);
+testBoard.receiveAttack(0, 7);
+testBoard.receiveAttack(0, 8);
+testBoard.receiveAttack(0, 9);
+console.log(testBoard.board)

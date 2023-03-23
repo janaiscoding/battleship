@@ -5,27 +5,45 @@
   width: 600px;
   height: 600px;
   border: solid 1px black;
-  display: flex;
 }
 .content {
   display: flex;
 }
 .cell,
 .row {
-  width: 60px;
-  height: 60px;
+  border: 1px solid rgba(0, 0, 0, 0.048);
+  width: 58px;
+  height: 58px;
 }
+
 .cell {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .player-ships,
-.player-control{ 
+.player-control {
   display: flex;
   gap: 50px;
 }
-.full {
-  background-color: aquamarine;
+.unclickable {
   pointer-events: none;
+}
+#hit {
+  background-color: brown;
+}
+.missed-hit {
+  background-color: purple;
+}
+.correct-hit {
+  background-color: bisque;
+}
+.ship-style{
+  background-color: aqua;
+}
+.invalid-placement:hover {
+  background-color: deeppink;
+}
+.can-start {
+  display: none;
 }
