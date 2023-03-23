@@ -23,16 +23,19 @@ export default class AI {
   }
   placeRandomShips() {
     let targetArray = this.playerBoard.shipsArray;
-    targetArray.forEach((curentShip) => {
-      while (curentShip.coordPairs.length === 0) {
+    targetArray.forEach((currentShip) => {
+      let isShipPlaced = currentShip.coordPairs.length;
+      while (isShipPlaced === 0) {
         let randomDirection = this.getRandomDirection();
         let ranX = this.getRandomX();
         let ranY = this.getRandomY();
-        let pushLength = curentShip.ship.length;
+        let pushLength = currentShip.ship.length;
         this.playerBoard.placeShip(pushLength, ranX, ranY, randomDirection);
+        isShipPlaced = currentShip.coordPairs.length;
       }
     });
   }
+
   computerShot(myTarget) {
     let shotExists = false;
     let hitX = this.getRandomNum();

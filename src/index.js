@@ -3,62 +3,35 @@ import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
 let turn = "pT";
-let shipLength = null;
-let shipDirection = "H";
-let myX = null;
-let myY = null;
-let player = new Player("player");
-let computer = new AI("computer");
 
+let shipLength = null; // let user put their ship lengths
+let shipDirection = "H"; // lets user pick their ship direction
+
+let player = new Player("player");
+let computer = new AI("computer"); // AI shops are placed by default!
+console.log(computer)
 function game() {
-  refreshGame(player, computer);
-  renderAllBoards(player, computer);
-  let isGameWon = checkIfWinner(player, computer);
-  while (!isGameWon) {
-    if (turn === "pt") {
-      if (myX !== null && myY !== null) {
-        player.playerShot(computer, myX, myY);
-        myX = null;
-        myY = null;
-        swapTurn("pT");
-      }
-    } else if (turn === "cT") {
-      computer.computerShot(player);
-      swapTurn("cT");
-    }
-    refreshGame(player, computer);
-    renderAllBoards(player, computer);
-    isGameWon = checkIfWinner(player, computer);
-  }
+//  renderAllBoards(player,computer)
 }
 
 // BOARDING AROUND HERE
-const renderBoard = (target, handleCellClicks) => {
-  let targetArray = target.playerBoard.board;
-  let targetString = target.name;
-  const targetAppend = document.querySelector(`.${targetString}-array`);
+const renderBoard = (boardName) => {
+  let targetArray = boardName.playerBoard.board;
+  const targetAppend = document.querySelector(`.${boardName.name}-array`);
+  console.log(targetArray)
   targetArray.forEach((row, rowIndex) => {
-    const createdRow = document.createElement("div");
-    createdRow.classList.add("row");
-    createdRow.id = rowIndex;
+    const myRow = document.createElement("div");
+    myRow.classList.add("row");
     row.forEach((cell, columnIndex) => {
-      const createdCell = document.createElement("div");
-      createdCell.innerText = cell;
-      createdCell.classList.add("cell");
-      createdCell.id = columnIndex;
-      createdCell.addEventListener("click", () => {
-        if (checkStatus && target.name === "computer") {
-          myX = rowIndex;
-          myY = columnIndex;
-        } else if (!checkStatus && target.name === "player") {
-          handleCellClicks(target, rowIndex, columnIndex);
-          checkStatus = checkUserShips(target);
-          console.log(checkStatus);
-        }
-      });
-      createdRow.appendChild(createdCell);
+      const myCell = document.createElement("div");
+      myCell.innerText = cell;
+      myCell.classList.add("cell");
+      myCell.setAttribute("data-x", rowIndex);
+      myCell.setAttribute("data-y", columnIndex);
+
+      myRow.appendChild(myCell);
     });
-    targetAppend.appendChild(createdRow);
+    targetAppend.appendChild(myRow);
   });
 };
 
@@ -95,33 +68,26 @@ const checkIfWinner = (player, computer) => {
 };
 
 // handler for placing ships
-const handleCellClicks = (target, rowIndex, columnIndex) => {
-  if (shipLength !== null) {
-    target.placePlayerShip(shipLength, rowIndex, columnIndex, shipDirection);
-    clearBoard(target);
-    renderBoard(target, handleCellClicks);
-    shipLength = null;
-  }
+const placeShipEvent = (e) => {
+  let x = parseInt(e.target.getAttribute("data-x"));
+  let y = parseInt(e.target.getAttribute("data-y"));
+  target.placePlayerShip(shipLength, x, y, shipDirection);
+  shipLength = null;
+  updateBoard(player); //function will call   clearBoard(player); and render board
 };
 
 // calling the board render twice on each gamestart
 const renderAllBoards = (target1, target2) => {
-  renderBoard(target1, handleCellClicks);
-  renderBoard(target2, handleCellClicks);
-};
+  renderBoard(target1);
+  renderBoard(target2);
+}
 
-const clearBoard = (target) => {
-  let targetString = target.name;
-  const targetClear = document.querySelector(`.${targetString}-array`);
+const clearBoard = (boardName) => {
+  const targetClear = document.querySelector(`.${boardName}-array`);
   targetClear.innerHTML = ""; //it will clear the dom
 };
 
-const refreshGame = (target1, target2) => {
-  clearBoard(target1);
-  clearBoard(target2);
-};
-
-//new game
+//new game button
 let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", (e) => {
   game();
@@ -136,17 +102,15 @@ lengthSelectors.forEach((selector) => {
 });
 
 // DOM TOGGLE DIRECTION
-const playerDirection = document.querySelector(".player-direction");
-playerDirection.addEventListener("click", () => {
-  if (playerDirection.innerText === "H") {
+const directionSelector = document.querySelector(".player-direction");
+directionSelector.addEventListener("click", () => {
+  if (directionSelector.innerText === "H") {
     shipDirection = "V";
-    playerDirection.innerText = "V";
-  } else if (playerDirection.innerText === "V") {
+    directionSelector.innerText = "V";
+  } else if (directionSelector.innerText === "V") {
     shipDirection = "H";
-    playerDirection.innerText = "H";
+    directionSelector.innerText = "H";
   }
   console.log(shipDirection);
 });
-
-game();
-let checkStatus = checkUserShips(player);
+game()
