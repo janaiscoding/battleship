@@ -41,7 +41,7 @@ export default class Gameboard {
     return board;
   }
   placeShip(l, x, y, d) {
-    if (d === "V") {
+    if (d === "H") {
       let columnValid = true;
       for (let i = x; i < x + l; i++) {
         if (this.board[i][y] !== "o" || x + l > 10) {
@@ -53,7 +53,7 @@ export default class Gameboard {
         if (l === 1 && this.shipsArray[0].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[0].coordPairs.push({ x, y });
-            this.board[x][y] = "V";
+            this.board[x][y] = "H";
             x++;
             l--;
           }
@@ -62,7 +62,7 @@ export default class Gameboard {
         if (l === 2 && this.shipsArray[1].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[1].coordPairs.push({ x, y });
-            this.board[x][y] = "V";
+            this.board[x][y] = "H";
             x++;
             l--;
           }
@@ -71,7 +71,7 @@ export default class Gameboard {
         if (l === 3 && this.shipsArray[2].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[2].coordPairs.push({ x, y });
-            this.board[x][y] = "V";
+            this.board[x][y] = "H";
             x++;
             l--;
           }
@@ -80,7 +80,7 @@ export default class Gameboard {
         if (l === 4 && this.shipsArray[3].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[3].coordPairs.push({ x, y });
-            this.board[x][y] = "V";
+            this.board[x][y] = "H";
             x++;
             l--;
           }
@@ -89,14 +89,14 @@ export default class Gameboard {
         if (l === 5 && this.shipsArray[4].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[4].coordPairs.push({ x, y });
-            this.board[x][y] = "V";
+            this.board[x][y] = "H";
             x++;
             l--;
           }
           return this.board;
         }
       }
-    } else if (d === "H") {
+    } else if (d === "V") {
       let rowValid = true;
       for (let j = y; j < y + l; j++) {
         if (this.board[x][j] !== "o" || y + l > 10) {
@@ -108,7 +108,7 @@ export default class Gameboard {
         if (l === 1 && this.shipsArray[0].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[0].coordPairs.push({ x, y });
-            this.board[x][y] = "H";
+            this.board[x][y] = "V";
             y++;
             l--;
           }
@@ -117,7 +117,7 @@ export default class Gameboard {
         if (l === 2 && this.shipsArray[1].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[1].coordPairs.push({ x, y });
-            this.board[x][y] = "H";
+            this.board[x][y] = "V";
             y++;
             l--;
           }
@@ -126,7 +126,7 @@ export default class Gameboard {
         if (l === 3 && this.shipsArray[2].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[2].coordPairs.push({ x, y });
-            this.board[x][y] = "H";
+            this.board[x][y] = "V";
             y++;
             l--;
           }
@@ -135,7 +135,7 @@ export default class Gameboard {
         if (l === 4 && this.shipsArray[3].coordPairs.length === 0) {
           while (l !== 0 && x + l < 11 && y + l < 11) {
             this.shipsArray[3].coordPairs.push({ x, y });
-            this.board[x][y] = "H";
+            this.board[x][y] = "V";
             y++;
             l--;
           }
@@ -144,7 +144,7 @@ export default class Gameboard {
         if (l === 5 && this.shipsArray[4].coordPairs.length === 0) {
           while (l !== 0) {
             this.shipsArray[4].coordPairs.push({ x, y });
-            this.board[x][y] = "H";
+            this.board[x][y] = "V";
             y++;
             l--;
           }

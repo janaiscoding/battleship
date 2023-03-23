@@ -3,22 +3,20 @@ import "./style.css";
 import AI from "./factories/AI";
 import Player from "./factories/player";
 let turn = "pT";
+let player = new Player("player");
+let computer = new AI("computer");
 
 let shipLength = null; // let user put their ship lengths
-let shipDirection = "H"; // lets user pick their ship direction
+let shipDirection = "V"; // lets user pick their ship direction
 
-let player = new Player("player");
-let computer = new AI("computer"); // AI shops are placed by default!
-console.log(computer)
 function game() {
-//  renderAllBoards(player,computer)
+  renderAllBoards();
 }
 
 // BOARDING AROUND HERE
 const renderBoard = (boardName) => {
   let targetArray = boardName.playerBoard.board;
   const targetAppend = document.querySelector(`.${boardName.name}-array`);
-  console.log(targetArray)
   targetArray.forEach((row, rowIndex) => {
     const myRow = document.createElement("div");
     myRow.classList.add("row");
@@ -28,8 +26,19 @@ const renderBoard = (boardName) => {
       myCell.classList.add("cell");
       myCell.setAttribute("data-x", rowIndex);
       myCell.setAttribute("data-y", columnIndex);
-
       myRow.appendChild(myCell);
+      if (boardName.name === "computer") {
+        myCell.addEventListener("click", (e) => {
+          attackEvent(e);
+          updateBoard(boardName);
+        });
+      }
+      if (boardName.name === "player") {
+        myCell.addEventListener("click", (e) => {
+          placeShipEvent(e);
+          updateBoard(boardName);
+        });
+      }
     });
     targetAppend.appendChild(myRow);
   });
@@ -67,29 +76,50 @@ const checkIfWinner = (player, computer) => {
   return gameOver;
 };
 
+//handler for attacking enemy
+const attackEvent = (e) => {
+  let x = parseInt(e.target.getAttribute("data-x"));
+  let y = parseInt(e.target.getAttribute("data-y"));
+  player.playerShot(computer, x, y);
+};
+
 // handler for placing ships
 const placeShipEvent = (e) => {
   let x = parseInt(e.target.getAttribute("data-x"));
   let y = parseInt(e.target.getAttribute("data-y"));
-  target.placePlayerShip(shipLength, x, y, shipDirection);
+  player.placePlayerShip(shipLength, x, y, shipDirection);
+  let allShipsPlaced = checkUserShips(player);
+  if (allShipsPlaced) {
+    const playerBoard = document.querySelector(`.player-array`);
+    playerBoard.classList.add("full");
+  }
   shipLength = null;
-  updateBoard(player); //function will call   clearBoard(player); and render board
 };
 
 // calling the board render twice on each gamestart
-const renderAllBoards = (target1, target2) => {
-  renderBoard(target1);
-  renderBoard(target2);
-}
+const renderAllBoards = () => {
+  clearBoard(player)
+  renderBoard(player);
+  clearBoard(computer)
+  renderBoard(computer);
+};
 
-const clearBoard = (boardName) => {
-  const targetClear = document.querySelector(`.${boardName}-array`);
+const clearBoard = (board) => {
+  const targetDiv = board.name;
+  const targetClear = document.querySelector(`.${targetDiv}-array`);
   targetClear.innerHTML = ""; //it will clear the dom
+};
+//
+const updateBoard = (board) => {
+  clearBoard(board);
+  renderBoard(board);
 };
 
 //new game button
 let newGame = document.querySelector(".new-game");
-newGame.addEventListener("click", (e) => {
+newGame.addEventListener("click", () => {
+  player = new Player("player");
+  computer = new AI("computer");
   game();
 });
 
@@ -113,4 +143,4 @@ directionSelector.addEventListener("click", () => {
   }
   console.log(shipDirection);
 });
-game()
+game();
