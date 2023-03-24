@@ -3,6 +3,7 @@ import AI from "./factories/AI";
 import Player from "./factories/player";
 const computerBoard = document.querySelector(".computer-array");
 const playerBoard = document.querySelector(".player-array");
+const placeShipsInfo = document.querySelector(".place-ships-info");
 const canStartGame = document.querySelector(".can-start");
 const winnerLabel = document.querySelector(".winner");
 
@@ -39,9 +40,14 @@ const renderBoard = (boardName) => {
       if (thisCell === "x") {
         myCell.classList.add("unclickable");
         myCell.classList.add("missed-hit");
+        myCell.classList.add("fa-regular");
+        myCell.classList.add("fa-x");
       } else if (thisCell === "s-x") {
         myCell.classList.add("unclickable");
         myCell.classList.add("correct-hit");
+        myCell.classList.add("fa-regular");
+        myCell.classList.add("fa-x");
+        myCell.classList.add("ship-style");
       }
       myRow.appendChild(myCell);
       if (boardName.name === "computer") {
@@ -101,8 +107,11 @@ const attackEvent = (e) => {
 // END GAME (MAYBE ADD "PLAY AGAIN?")
 const endGame = (winnerName) => {
   computerBoard.classList.add("unclickable");
+  canStartGame.style.display = "none";
   winnerLabel.style.display = "block";
-  winnerLabel.innerText = `Our winner is ${winnerName.name}`;
+  if (winnerName.name === "player") {
+    winnerLabel.innerText = `You Won!`;
+  } else winnerLabel.innerText = `You Lost! Try again? ->`;
 };
 
 // PLACING PLAYER SHIP ON CLICK
@@ -112,9 +121,11 @@ const placeShipEvent = (e) => {
   player.placePlayerShip(shipLength, x, y, shipDirection);
   let allShipsPlaced = checkPlayerShips();
   if (allShipsPlaced) {
+    placeShipsInfo.style.display = "none";
     canStartGame.style.display = "block";
     computerBoard.classList.remove("unclickable");
     playerBoard.classList.add("unclickable");
+    directionSelector.classList.add("unclickable");
   }
   shipLength = null;
 };
@@ -133,6 +144,9 @@ const updateBoard = (board) => {
 // NEW GAME BUTTON
 let newGame = document.querySelector(".new-game");
 newGame.addEventListener("click", () => {
+  placeShipsInfo.style.display = "block";
+  canStartGame.style.display = "none";
+  winnerLabel.style.display = "none";
   playerBoard.classList.remove("unclickable");
   game();
 });

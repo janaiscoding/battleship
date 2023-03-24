@@ -10,6 +10,7 @@
   --primary-purple: #4a4182;
   --primary-pink: #f2dede;
   --primary-red: #964848;
+  --nautical-blue: #1a5091;
 }
 
 *,
@@ -27,7 +28,8 @@ body {
 /*HEADER*/
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: 100px;
   align-items: center;
   padding: 0px 100px;
   background-color: var(--primary-blue);
@@ -35,34 +37,36 @@ body {
   -webkit-box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
   box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
 }
-.logo {
-  color: white;
-  font-size: 2rem;
-  font-weight: 500;
-}
-.social-link {
-  color: white;
-  font-size: 1.3rem;
-}
+
 /* MAIN CONTENT */
 .content {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 0px 100px;
+  height: 85vh;
 }
-.top-side-wrapper {
-  display: flex;
-  justify-content: space-between;
+.new-game {
+  cursor: pointer;
+}
+.new-game:hover {
+  transform: scale(1.05);
+}
+.info-panel {
+  font-size: 24px;
+  color: var(--primary-pink);
 }
 .bottom-side-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 100px;
 }
 
+/* GAME CONTENT*/
 .player-board,
 .numbers-column,
 .letters-row,
-.computer-board{
+.computer-board {
   display: flex;
 }
 .numbers-column {
@@ -71,31 +75,35 @@ body {
 }
 .letter {
   height: 30px;
-  width: 60px;
+  width: 50px;
   font-size: 24px;
   text-align: center;
+  color: var(--primary-pink);
 }
 .number {
-  height: 60px;
+  height: 50px;
   width: 30px;
   font-size: 24px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  color: var(--primary-pink);
 }
 .gameboard {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: repeat(10, 60px);
-  grid-template-rows: repeat(10, 60px);
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
   background-color: var(--primary-pink);
-  width: 600px;
-  height: 600px;
   border: solid 1px black;
 }
 
 .cell,
 .row {
-  border: 1px solid rgba(207, 0, 0, 0.048);
-  width: 58px;
-  height: 58px;
+  box-sizing: border-box;
+  border: 1px solid rgba(24, 3, 3, 0.018);
+  width: 50px;
+  height: 50px;
 }
 
 .cell {
@@ -103,31 +111,92 @@ body {
   align-items: center;
   justify-content: center;
 }
+.cell:hover {
+  background-color: rgba(128, 128, 128, 0.212);
+}
+.player-panel {
+  box-sizing: border-box;
+  border: 1px solid var(--primary-blue);
+  background-color: var(--primary-pink);
+  padding: 15px 0px;
+}
 .player-ships,
 .player-control {
   display: flex;
-  gap: 50px;
+  font-size: 24px;
+  padding: 0px 15px;
+}
+
+.player-control {
+  justify-content: space-between;
+  height: 40px;
+  margin-top: 15px;
+}
+.player-ships {
+  justify-content: space-between;
+  height: 30px;
+}
+.player-direction {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  color: white;
+  border-radius: 2px;
+  background-color: var(--primary-red);
+  border: 1px solid var(--primary-blue);
+}
+.player-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.length-selector {
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 1px solid var(--primary-blue);
+  background-color: var(--nautical-blue);
+  color: white;
+  text-align: center;
+}
+.player-carrier {
+  width: 160px;
+}
+.player-battleship {
+  width: 120px;
+}
+.player-destroyer {
+  width: 90px;
+}
+.player-submarine {
+  width: 60px;
+}
+.player-patrol-boat {
+  width: 30px;
 }
 .unclickable {
   pointer-events: none;
 }
-#hit {
-  background-color: brown;
-}
-.missed-hit {
-  background-color: purple;
-}
-.correct-hit {
-  background-color: bisque;
-}
+
 .ship-style {
-  background-color: aqua;
+  box-sizing: border-box;
+  background-color: var(--nautical-blue);
+  border: 1px solid var(--primary-blue);
+  color: white;
+}
+.fa-circle-xmark {
+  color: white;
 }
 .invalid-placement:hover {
-  background-color: deeppink;
+  background-color: rgba(201, 23, 23, 0.767);
 }
 .can-start {
   display: none;
+}
+.length-selector:hover,
+.player-direction:hover {
+  cursor: pointer;
 }
 
 /*FOOTER*/
@@ -139,6 +208,7 @@ footer {
   justify-content: center;
   align-items: center;
   height: 5vh;
+  color: var(--primary-pink);
 }
 .footer-link {
   color: white;
@@ -148,6 +218,7 @@ a,
 a:visited,
 a:focus {
   text-decoration: none;
+  color: var(--primary-pink);
 }
 
 input:focus,
