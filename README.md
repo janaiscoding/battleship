@@ -10,7 +10,7 @@
 - After finishing the App, I learned how to manipulate the DOM to creaate the **User Interface**.
 
 ## Live Demo
-
+![Image preview of the app](src/assets/Inder/battleship-preview.png)
 - See the full live preview [here](https://janaiscoding.github.io/battleship/)
 
 ## Getting Started 
