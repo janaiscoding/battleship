@@ -32,8 +32,11 @@ npm start
 
 - Play the classic game of Battleship against the AI!
 - You can place your ships horizontally or vertically.
+- You can't place your ship if another ship is taking that entire space.
+- You can't interact with the computer board until you placed all your ships.
+- You can't see the computer board's cells until you use your attacks.
 - First to sink all the ships wins! You can play as many times as you want! 
-- The miss and hit icons used in this project are from [Font Awesome Icons](https://fontawesome.com/).
+- The hit icon used in this project is from [Font Awesome Icons](https://fontawesome.com/).
 - This project is part of The Odin Project's [curriculum](https://www.theodinproject.com/lessons/node-path-javascript-battleship).
 
 # Built with 
