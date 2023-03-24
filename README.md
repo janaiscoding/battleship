@@ -1,6 +1,6 @@
 <h1> Jana's Battleship Game </h1>
 
-<h3> Scope of This Project </h3>
+<h3> Project's Scope </h3>
 
 ![My BattleShip Project Tests](src/assets/Inder/my-unit-tests.png)
 
@@ -15,12 +15,16 @@
 
 <h3> Getting Started </h3>
 
-```
-git clone https://github.com/janaiscoding/battleship.git
- cd battleship
- npm install
- npm start
-```
+<h4>Installing and running</h4>
+
+```git clone https://github.com/janaiscoding/battleship.git
+cd battleship
+npm install
+npm start```
+
+<h4>Testing with jest</h4>
+
+```npm run test```
 
 <h3> Project Details & Description </h3>
 - Play the classic game of Battleship against the AI!
