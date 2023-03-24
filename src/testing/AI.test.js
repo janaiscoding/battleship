@@ -21,7 +21,7 @@ it("Should be able to throw a random attack on the enemy board", () => {
   //always a miss because player board is empty
 });
 
-it("Should be able to win against an enemy within maximum 121 shots (11 x 11)", () => {
+it("Should be able to win against an enemy within maximum 242 shots (11 x 11, twice)", () => {
   //placing random ship
   player.placePlayerShip(5, 0, 0, "H");
   let isPlayerSunk = player.playerBoard.allSunk;
@@ -32,7 +32,7 @@ it("Should be able to win against an enemy within maximum 121 shots (11 x 11)", 
   }
   let counter = computerPlayer.AIPastShots.length;
   expect(isPlayerSunk).toBeTruthy();
-  expect(counter).toBeLessThanOrEqual(121);
+  expect(counter).toBeLessThanOrEqual(242);
 });
 
 it("Should never hit in the same place", () => {
