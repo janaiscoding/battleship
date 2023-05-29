@@ -21,7 +21,8 @@
 git clone https://github.com/janaiscoding/battleship.git
 cd battleship
 npm install
-npm start
+delete the "type": "module", line from package.json
+npm run build
 ```
 
 ### Testing with jest
