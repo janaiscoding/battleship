@@ -8,9 +8,11 @@
 - It was unusual at first to write the **Unit Testing** and then start writing the code to make it pass, but it was a really fun and enjoyable experience in the end!
 - I worked with Classes again for Ship/Player/Gameboard/AI constructors, and all the game checking logic happens inside of the Classes.
 - After finishing the App, I learned how to manipulate the DOM to creaate the **User Interface**.
+- Furthermore, I have implemented an instructions panel and a mobile version that toggles between the 2 boards. The current version is not entirely responsive, but you can play it in the desktop and mobile version.
 
 ## Live Demo
 ![Image preview of the app](src/assets/Inder/battleship-preview.png)
+![gif of how to play](src/assets/howtoplay.gif)
 - See the full live preview [here](https://janaiscoding.github.io/battleship/)
 
 ## Getting Started 

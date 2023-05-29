@@ -253,7 +253,7 @@ input:active {
 .place-ships-info:hover {
   cursor: pointer;
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .hide-on-mobile {
     display: none;
   }
@@ -342,7 +342,7 @@ input:active {
     transition: all ease-in 0.2s;
   }
 }
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .modal-mobile {
     display: none;
     visibility: hidden;
