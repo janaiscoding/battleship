@@ -22,7 +22,7 @@ git clone https://github.com/janaiscoding/battleship.git
 cd battleship
 npm install
 delete the "type": "module", line from package.json
-npm run build
+npx webpack
 ```
 
 ### Testing with jest
@@ -59,5 +59,4 @@ npm run build
 
 ### Future plans for this project 
 
-- Make the AI smarter
-- Mobile Responsiveness
+- Mobile Responsiveness (check)
