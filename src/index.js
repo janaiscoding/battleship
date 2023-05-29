@@ -6,6 +6,8 @@ const playerBoard = document.querySelector(".player-array");
 const placeShipsInfo = document.querySelector(".place-ships-info");
 const canStartGame = document.querySelector(".can-start");
 const winnerLabel = document.querySelector(".winner");
+const playerPanel = document.querySelector(".player-board");
+const computerPanel = document.querySelector(".computer-board");
 
 let player = new Player("player");
 let computer = new AI("computer");
@@ -81,6 +83,13 @@ const renderBoard = (boardName) => {
 const checkPlayerShips = () => {
   let targetCheck = player.playerBoard.shipsArray;
   let response = targetCheck.every((ship) => ship.coordPairs.length > 0);
+
+  if (response) {
+    //when you place all ships, hide my panel
+    playerPanel.classList.add("hide-on-mobile");
+    // display the comp panel for first move
+    computerPanel.classList.remove("hide-on-mobile");
+  }
   return response;
 };
 
@@ -91,12 +100,28 @@ const attackEvent = (e) => {
   let canAttack = checkPlayerShips();
   if (canAttack) {
     // PLAYER TURN
+    // when player's turn is on, i already see the comp panel
+    //i attack
     player.playerShot(computer, x, y);
+    setTimeout(() => {
+      // after attack, i hide the comp board and display mine
+      computerPanel.classList.remove("display-on-mobile");
+      computerPanel.classList.add("hide-on-mobile");
+      playerPanel.classList.remove("hide-on-mobile");
+      playerPanel.classList.add("display-on-mobile");
+      console.log("hiding the computer board after my attack and showing mine");
+    }, 300);
     if (computer.playerBoard.allSunk) {
       endGame(player);
     }
     // AI TURN
     computer.computerShot(player);
+    setTimeout(() => {
+      playerPanel.classList.remove("display-on-mobile");
+      playerPanel.classList.add("hide-on-mobile");
+      computerPanel.classList.remove("hide-on-mobile");
+      computerPanel.classList.add("display-on-mobile");
+    }, 1000);
     updateBoard(player);
     if (player.playerBoard.allSunk) {
       endGame(computer);
