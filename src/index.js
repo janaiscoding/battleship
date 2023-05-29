@@ -195,5 +195,24 @@ directionSelector.addEventListener("click", () => {
     directionSelector.innerText = "H";
   }
 });
+// HOW TO PLAY TOGGLE
+const modal = document.querySelector(".modal");
 
+placeShipsInfo.addEventListener("mouseover", () => {
+  modal.style.visibility = "visible";
+});
+modal.addEventListener("mouseout", () => {
+  modal.style.visibility = "hidden";
+});
+modal.addEventListener("mouseover", () => {
+  modal.style.visibility = "visible";
+});
+const modalMobile = document.querySelector(".modal-mobile");
+const closeModalMobile = document.querySelector(".close-modal");
+placeShipsInfo.addEventListener("click", () => {
+  modalMobile.style.visibility = "visible";
+});
+closeModalMobile.addEventListener("click", () => {
+  modalMobile.style.visibility = "hidden";
+});
 game();
