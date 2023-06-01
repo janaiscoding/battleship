@@ -23,7 +23,6 @@
 git clone https://github.com/janaiscoding/battleship.git
 cd battleship
 npm install
-delete the "type": "module", line from package.json
 npx webpack
 ```
 

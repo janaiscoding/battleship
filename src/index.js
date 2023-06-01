@@ -9,6 +9,13 @@ const winnerLabel = document.querySelector(".winner");
 const playerPanel = document.querySelector(".player-board");
 const computerPanel = document.querySelector(".computer-board");
 
+const modal = document.querySelector(".modal");
+const modalMobile = document.querySelector(".modal-mobile");
+const closeModalMobile = document.querySelector(".close-modal");
+
+const lengthSelectors = document.querySelectorAll(".length-selector");
+let newGame = document.querySelector(".new-game");
+
 let player = new Player("player");
 let computer = new AI("computer");
 let shipLength = null;
@@ -167,8 +174,11 @@ const updateBoard = (board) => {
 };
 
 // NEW GAME BUTTON
-let newGame = document.querySelector(".new-game");
+
 newGame.addEventListener("click", () => {
+  lengthSelectors.forEach((selector) => {
+    selector.style.backgroundColor = "#1a5091";
+  });
   placeShipsInfo.style.display = "block";
   canStartGame.style.display = "none";
   winnerLabel.style.display = "none";
@@ -177,7 +187,7 @@ newGame.addEventListener("click", () => {
 });
 
 // DOM TOGGLE SHIPS SELECTORS
-const lengthSelectors = document.querySelectorAll(".length-selector");
+
 lengthSelectors.forEach((selector) => {
   selector.addEventListener("click", (e) => {
     shipLength = parseInt(e.target.id);
@@ -196,7 +206,6 @@ directionSelector.addEventListener("click", () => {
   }
 });
 // HOW TO PLAY TOGGLE
-const modal = document.querySelector(".modal");
 
 placeShipsInfo.addEventListener("mouseover", () => {
   modal.style.visibility = "visible";
@@ -207,8 +216,7 @@ modal.addEventListener("mouseout", () => {
 modal.addEventListener("mouseover", () => {
   modal.style.visibility = "visible";
 });
-const modalMobile = document.querySelector(".modal-mobile");
-const closeModalMobile = document.querySelector(".close-modal");
+
 placeShipsInfo.addEventListener("click", () => {
   modalMobile.style.visibility = "visible";
 });
